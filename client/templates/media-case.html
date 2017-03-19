@@ -1,0 +1,48 @@
+<template name="daydGalleryUserCase">
+  <div class="ma10 caseVerte galerie-media">
+    <a href="/galeries/{{username}}">{{username}}<br>
+      {{#with media}}
+        <img src="{{this.url store='medias' uploading='/img/uploading.gif' storing='/img/uploading.gif'}}" width="100px">
+      {{/with}}
+    </a>
+  </div>
+</template>
+
+<template name="daydGalleryUserCaseFolder">
+  <div class="ma10 caseVerte galerie-media">
+    <a href="/galeries/{{user.username}}/{{name}}">
+      {{#if isGalerieEditing}}
+        <button class="btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+      {{/if}}
+      {{name}}<br>
+      {{#with mediaFolder}}
+        <img src="{{this.url store='medias' uploading='/img/uploading.gif' storing='/img/uploading.gif'}}" width="100px">
+      {{/with}}
+    </a>
+  </div>
+</template>
+
+<template name="daydGalleryUserCaseMedia">
+  <li class="caseVerte galerie-media">
+    {{#if isGalerieEditing}}
+      <button class="btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+    {{/if}}
+    {{#with media}}
+      {{#if this.isUploaded}}
+        <img src="{{this.url store='medias' storing='/img/uploading.gif'}}" data-original="{{this.url store='mediasFull' storing='/img/uploading.gif'}}" width="100px">
+
+        <div class="comment">
+          {{nbCommentaires}}
+          {{#if isCommentsShowed}}
+            <div class="comment-all">
+            {{> commentaires type="media" value=_id}}
+            </div>
+          {{/if}}
+        </div>
+      {{else}}
+        {{> FS.UploadProgressBar bootstrap=true}}
+      {{/if}}
+
+    {{/with}}
+  </li>
+</template>
