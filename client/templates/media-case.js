@@ -8,7 +8,7 @@ Template.daydGalleryUserCase.onCreated(function() {
 
 Template.daydGalleryUserCase.helpers({
 
-  'media': function() {
+  media: function() {
     var g = DaydGallery.findOne({"user._id": this._id, type: {$ne: 'folder'}});
     if(g) {
       var folderIds = Session.get('folderIds');
@@ -20,7 +20,7 @@ Template.daydGalleryUserCase.helpers({
     }
   },
 
-  'nbCommentaires': function() {
+  nbCommentaires: function() {
     var that = this;
     Meteor.call('nbCommentaires', 'media', this._id, function(err, res) {
       Session.set('nbc' + 'media' + that._id, res);
@@ -52,11 +52,11 @@ Template.daydGalleryUserCaseFolder.helpers({
 
 Template.daydGalleryUserCaseMedia.helpers({
 
-  'media': function() {
+  media: function() {
     return Medias.findOne(this.media_id);
   },
 
-  'nbCommentaires': function() {
+  nbCommentaires: function() {
     var that = this;
     Meteor.call('nbCommentaires', 'media', this._id, function(err, res) {
       Session.set('nbc' + 'media' + that._id, res);
@@ -64,9 +64,17 @@ Template.daydGalleryUserCaseMedia.helpers({
     var nb = Session.get('nbc' + 'media' + this._id)
     return nb ? nb : '.';
   },
+
   isCommentsShowed: function() {
     return Session.get('comment-showed') === this._id ? 'comment-active' : '';
-  }
+  },
+
+  folders: function() {
+    console.log(this);
+    var t = DaydGallery.find({type: 'folder', "user._id": this.user._id});
+    console.log(t.fetch());
+    return t
+  },
 
 });
 
@@ -81,5 +89,21 @@ Template.daydGalleryUserCaseMedia.events({
       Session.set('comment-showed', '');
     else
       Session.set('comment-showed', this._id)
-  }
+  },
+
+  'change [name=moveMedia]': function(e, tpl) {
+    e.preventDefault();
+
+    var folder_id = $(e.currentTarget).val();
+    if(folder_id === "select") return;
+    Meteor.call('moveGalerieMedias', this, folder_id, function(err, res) {
+    });
+  },
+
+  'click .deleteMedia': function(e, tpl) {
+    e.preventDefault();
+
+    Meteor.call('deleteGalerieMedias', this, function(err, res) {
+    });
+  },
 });

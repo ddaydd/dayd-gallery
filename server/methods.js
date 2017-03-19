@@ -89,6 +89,13 @@ Meteor.methods({
     DaydGallery.insert(media);
   },
 
+  moveGalerieMedias: function(media, folder_id) {
+    if(!Meteor.userId()) return false;
+
+    if(media.user._id === Meteor.userId() || isAdmin())
+      DaydGallery.update(media._id, {$set: {folder_id: folder_id}});
+  },
+
   deleteGalerieMedias: function(media) {
     if(!Meteor.userId())
       return false;
@@ -106,7 +113,7 @@ Meteor.methods({
   },
 
   lastMedia: function() {
-    var gs = DaydGallery.find({media_id: { '$exists': true }}).fetch();
+    var gs = DaydGallery.find({media_id: {'$exists': true}}).fetch();
 
     var medias = [];
     _.each(gs, function(g) {

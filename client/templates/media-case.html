@@ -25,7 +25,16 @@
 <template name="daydGalleryUserCaseMedia">
   <li class="caseVerte galerie-media">
     {{#if isGalerieEditing}}
-      <button class="btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+      <div class="actionMedia">
+        <select name="moveMedia">
+          <option value="select">-- Move</option>
+          <option value="">No folder</option>
+          {{#each folders}}
+            <option value="{{_id}}">{{name}}</option>
+          {{/each}}
+        </select>
+        <button class="btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+      </div>
     {{/if}}
     {{#with media}}
       {{#if this.isUploaded}}
@@ -35,7 +44,7 @@
           {{nbCommentaires}}
           {{#if isCommentsShowed}}
             <div class="comment-all">
-            {{> commentaires type="media" value=_id}}
+              {{> commentaires type="media" value=_id}}
             </div>
           {{/if}}
         </div>

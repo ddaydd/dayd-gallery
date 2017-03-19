@@ -127,14 +127,6 @@ Template.daydGalleryUser.events({
     }
   },
 
-  'click .deleteMedia': function(e, tpl) {
-    e.preventDefault();
-
-    Meteor.call('deleteGalerieMedias', this, function(err, res) {
-
-    });
-  },
-
   'click .disableGalerie': function() {
     Meteor.call('activateStatusMyGalerie', false, function(err, res) {
     });
