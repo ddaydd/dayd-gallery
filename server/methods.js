@@ -121,7 +121,7 @@ const findAMedia = function() {
   const gs = DaydGallery.find({media_id: {'$exists': true}}).fetch();
   if(!gs.length) return false;
   const idRnd = Math.floor((Math.random() * gs.length));
-  const d = DaydGalleryMedias.findOne(gs[idRnd].media_id);
+  const d = DaydGalleryMedias.findOne(gs[idRnd].media_id).get();
   if(d) {
     d.user = gs[idRnd].user;
     d.folder_id = gs[idRnd].folder_id;

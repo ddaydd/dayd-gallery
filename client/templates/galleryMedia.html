@@ -12,22 +12,18 @@
         </select>
       </div>
     {{/if}}
+
     {{#with media}}
-      {{#if this.isUploaded}}
-        <img src="{{this.url store='daydGalleryMediasTn' storing='/img/uploading.gif'}}" data-original="{{this.url store='daydGalleryMedias' storing='/img/uploading.gif'}}" width="100px">
-
-        <div class="comment">
-          {{nbCommentaires}}
-          {{#if isCommentsShowed}}
-            <div class="comment-all">
-              {{> commentaires type="media" value=_id}}
-            </div>
-          {{/if}}
-        </div>
-      {{else}}
-        {{> FS.UploadProgressBar bootstrap=true}}
+      {{#if isImage}}
+        <img src="{{link}}" alt="{{name}}s" width="100"/>
       {{/if}}
-
+      {{#if isVideo}}
+        <video height="auto" controls="controls">
+          <source src="{{link}}?play=true" type="{{type}}"/>
+          <!-- Same as: -->
+          <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->
+        </video>
+      {{/if}}
     {{/with}}
   </li>
 </template>

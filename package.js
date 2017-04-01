@@ -18,11 +18,7 @@ Package.onUse(function(api) {
     'less@2.7.9',
     'accounts-base',
     'ecmascript',
-    'cfs:standard-packages',
-    'cfs:gridfs', // need for cfs Error: "Queue" network [undefined]
-    'cfs:filesystem',
-    'cfs:graphicsmagick',
-    'cfs:ui'
+    'ostrio:files@1.7.3'
   ]);
 
   api.use("templating", "client");

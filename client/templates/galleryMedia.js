@@ -8,6 +8,10 @@ Template.daydGalleryMedia.helpers({
     return DaydGalleryMedias.findOne(this.media_id);
   },
 
+  // link: function() {
+  //   return this.link();
+  // },
+
   nbCommentaires: function() {
     var that = this;
     Meteor.call('nbCommentaires', 'media', this._id, function(err, res) {
@@ -19,11 +23,7 @@ Template.daydGalleryMedia.helpers({
 
   isCommentsShowed: function() {
     return Session.get('comment-showed') === this._id ? 'comment-active' : '';
-  },
-
-  folders: function() {
-    return DaydGallery.find({type: 'folder', "user._id": this.user._id});
-  },
+  }
 
 });
 

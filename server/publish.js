@@ -10,6 +10,14 @@ Meteor.publish("daydGalleryUser", function(username) {
   return DaydGallery.find({'user.username': username});
 });
 
+// Meteor.publish(null, function() {
+//   return DaydGalleryMedias.find({});
+// });
+
 Meteor.publish(null, function() {
-  return DaydGalleryMedias.find({});
+  return DaydGallery.find();
+});
+
+Meteor.publish(null, function () {
+  return DaydGalleryMedias.find().cursor;
 });

@@ -24,7 +24,7 @@ Template.daydGalleryUser.helpers({
   },
 
   medias: function() {
-    let search = {type: {$ne: 'folder'}, "user.username": this.username, folder_id: {$in: [null, '']}};
+    let search = {type: {$ne: 'folder'}, "user._id": this.userId, folder_id: {$in: [null, '']}};
     if(this.folderId) search.folder_id = this.folderId;
     return DaydGallery.find(search);
   },
@@ -39,7 +39,7 @@ Template.daydGalleryUser.helpers({
   },
 
   folders: function() {
-    return DaydGallery.find({type: 'folder', "user.username": this.username});
+    return DaydGallery.find({type: 'folder', "user._id": this.userId});
   },
 
   isMyGallery: function() {
@@ -85,7 +85,7 @@ Template.daydGalleryUser.events({
     }
     else {
       user._id = Meteor.user()._id;
-      user.username = Dayd.getUsername(Meteor.user());
+      user.username = Dayd.getUsername(Meteor.userId());
     }
 
     const that = this;
@@ -116,5 +116,62 @@ Template.daydGalleryUser.events({
   'click .enableGalerie': function() {
     Meteor.call('activateStatusMyGalerie', true, function(err, res) {
     });
+  }
+});
+
+// daydGalleryUser
+Template.daydGalleryUser.onCreated(function() {
+  this.currentUpload = new ReactiveVar(false);
+});
+
+Template.daydGalleryUser.helpers({
+  currentUpload: function() {
+    return Template.instance().currentUpload.get();
+  }
+});
+
+Template.daydGalleryUser.events({
+  'change #fileInput': function(e, template) {
+    if(e.currentTarget.files && e.currentTarget.files[0]) {
+      // We upload only one file, in case
+      // multiple files were selected
+      var upload = DaydGalleryMedias.insert({
+        file: e.currentTarget.files[0],
+        streams: 'dynamic',
+        chunkSize: 'dynamic'
+      }, false);
+
+      upload.on('start', function() {
+        template.currentUpload.set(this);
+      });
+
+      const user = {
+        _id: this.userId,
+        username: Dayd.getUsername(this.userId)
+      };
+
+      const that = this;
+      upload.on('end', function(error, fileObj) {
+        if(error) {
+          alert('Error during upload: ' + error);
+        } else {
+          console.log('File "' + fileObj.name + '" successfully uploaded');
+
+          const media = {
+            folder_id: that.folderId,
+            name: fileObj.name,
+            user: user,
+            media_id: fileObj._id
+          };
+          Meteor.call('createGalerieMedias', media, function(err) {
+            if(err) console.log(err);
+            // else $('form#upload')[0].reset();
+          });
+        }
+        template.currentUpload.set(false);
+      });
+
+      upload.start();
+    }
   }
 });
