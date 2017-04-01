@@ -71,7 +71,7 @@ Meteor.methods({
       if(galerie.type != 'folder') {
         if(galerie.name) {
           console.log(galerie.name)
-          var media = Medias.findOne({"original.name": galerie.name});
+          var media = DaydGalleryMedias.findOne({"original.name": galerie.name});
           if(media) {
             console.log(media)
             DaydGallery.update(galerie._id, {$set: {media_id: media._id}});
@@ -92,7 +92,7 @@ Meteor.methods({
   moveGalerieMedias: function(media, folder_id) {
     if(!Meteor.userId()) return false;
 
-    if(media.user._id === Meteor.userId() || isAdmin())
+    if(media.user._id === Meteor.userId() || Dayd.isAdmin())
       DaydGallery.update(media._id, {$set: {folder_id: folder_id}});
   },
 
@@ -100,7 +100,7 @@ Meteor.methods({
     if(!Meteor.userId())
       return false;
 
-    if(media.user._id === Meteor.userId() || isAdmin())
+    if(media.user._id === Meteor.userId() || Dayd.isAdmin())
       DaydGallery.remove(media._id);
   },
 
@@ -113,16 +113,19 @@ Meteor.methods({
   },
 
   lastMedia: function() {
-    var gs = DaydGallery.find({media_id: {'$exists': true}}).fetch();
-
-    var medias = [];
-    _.each(gs, function(g) {
-      if(g.media_id)
-        medias.push(g.media_id);
-    });
-    var len = medias.length;
-    var rnd = Math.floor((Math.random() * len));
-    var id = medias[rnd];
-    return Medias.findOne(id);
+    return findAMedia();
   }
 });
+
+const findAMedia = function() {
+  const gs = DaydGallery.find({media_id: {'$exists': true}}).fetch();
+  if(!gs.length) return false;
+  const idRnd = Math.floor((Math.random() * gs.length));
+  const d = DaydGalleryMedias.findOne(gs[idRnd].media_id);
+  if(d) {
+    d.user = gs[idRnd].user;
+    d.folder_id = gs[idRnd].folder_id;
+    return d;
+  }
+  else return findAMedia();
+};

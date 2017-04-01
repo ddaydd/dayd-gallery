@@ -17,7 +17,12 @@
 
     <div class="row">
       {{#each usersGalerie}}
-        {{> daydGalleryUserCase}}
+        <a href="{{pathFor 'daydGalleryUser' username=username}}" class="dayd-bloc dayd-bloc-folder">
+          <div class="username">{{username}}</div>
+          {{#with media}}
+            <img src="{{this.url store='daydGalleryMediasTn' uploading='/img/uploading.gif' storing='/img/uploading.gif'}}" width="100px">
+          {{/with}}
+        </a>
       {{else}}
         Aucune galerie
       {{/each}}

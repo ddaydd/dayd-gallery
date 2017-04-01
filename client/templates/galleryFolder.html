@@ -1,0 +1,11 @@
+<template name="daydGalleryFolder">
+  <a href="{{pathFor 'daydGalleryUser' username=user.username folderId=_id}}" class="dayd-bloc dayd-bloc-folder">
+    {{#if isGalerieEditing}}
+      <button class="pull-right btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+    {{/if}}
+    <div class="username">{{name}}</div>
+    {{#with mediaFolder}}
+      <img src="{{this.url store='daydGalleryMediasTn' uploading='/img/uploading.gif' storing='/img/uploading.gif'}}" width="100px">
+    {{/with}}
+  </a>
+</template>

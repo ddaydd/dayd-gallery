@@ -1,5 +1,5 @@
 <template name="daydGalleryUser">
-  <div id="dayd-gallery">
+  <div id="dayd-gallery" class="{{isGalerieEditingClass}}">
     <div class="page-header">
       <h1 class="titre">Galerie de {{username}}</h1>
 
@@ -25,23 +25,22 @@
           <li class="active">{{username}}</li>
         {{else}}
           <li><a href="/galeries/{{username}}" title="{{username}}">{{username}}</a></li>
-          <li class="active">{{folder}}</li>
+          <li class="active">{{folderName}}</li>
         {{/if}}
       </ol>
     </div>
 
     {{#if withFolders}}
-      <div class="row">
-        {{#each folders}}
-          {{> daydGalleryUserCaseFolder}}
-        {{/each}}
-      </div>
+      {{#each folders}}
+        {{> daydGalleryFolder}}
+      {{/each}}
+      <div class="clearfix"></div>
     {{/if}}
 
     <div>
       <ul id="images" class="list-unstyled">
         {{#each medias}}
-          {{> daydGalleryUserCaseMedia}}
+          {{> daydGalleryMedia}}
         {{else}}
           Aucune image
         {{/each}}
@@ -50,27 +49,32 @@
     </div>
 
     {{#if isGalerieEditing}}
+      <div class="row">
+        <div class="col-xs-6">
+          {{#if withFolders}}
+            <h2 class="titre">Creer un dossier</h2>
 
-      {{#if withFolders}}
-        <h2 class="titre">Creer un dossier</h2>
-
-        <form id="createFolder">
-          <div class="form-group">
-            <input name="name" class="form-control" placeholder="folder name">
-            <input name="type" type="hidden" value="folder">
-          </div>
-          <button class="btn btn-xs btn-primary">Creer un dossier</button>
-        </form>
-      {{/if}}
-
-      <h2 class="titre">Ajouter des images</h2>
-
-      <form id="upload">
-        <div class="form-group">
-          <input id="addImage" type="file" class="btn btn-primary" multiple>
+            <form id="createFolder">
+              <div class="form-group">
+                <input name="name" class="form-control" placeholder="folder name">
+                <input name="type" type="hidden" value="folder">
+              </div>
+              <button class="btn btn-xs btn-primary">Creer un dossier</button>
+            </form>
+          {{/if}}
         </div>
-        <button class="btn btn-primary">Upload</button>
-      </form>
+
+        <div class="col-xs-6">
+          <h2 class="titre">Ajouter des images</h2>
+
+          <form id="upload">
+            <div class="form-group">
+              <input id="addImage" type="file" class="btn btn-primary" multiple>
+            </div>
+            <button class="btn btn-xs btn-primary">Upload</button>
+          </form>
+        </div>
+      </div>
     {{/if}}
   </div>
 </template>

@@ -1,0 +1,71 @@
+#dayd-gallery {
+  .dayd-bloc {
+    padding: 0;
+    position: relative;
+    float: left;
+    min-width: 100px;
+
+    &.dayd-bloc-folder, &.dayd-bloc-media {
+      min-height: 100px;
+      margin: 0 10px 10px 0;
+    }
+
+    &.dayd-bloc-folder {
+      min-height: 120px;
+      .username {
+        padding-left: 5px;
+      }
+    }
+
+    img {
+      cursor: pointer;
+    }
+
+    .action-media {
+      position: absolute;
+      z-index: 10;
+      left: 125px;
+      width: calc(~"100% - 154px");
+      display: none;
+    }
+    &:hover {
+      .action-media {
+        display: block;
+      }
+    }
+    .comment {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      &:before {
+        content: url("/theme/design/cmt.gif");
+        position: absolute;
+        z-index: 1;
+      }
+      .comment-all {
+        background-color: rgba(0, 0, 0, 0.28);
+        padding-bottom: 20px;
+        position: absolute;
+        width: 400px;
+        z-index: 2;
+      }
+    }
+  }
+  &.gallery-is-editing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background-color: #fff;
+    overflow: scroll;
+    .dayd-bloc {
+      float: none;
+      display: block;
+    }
+  }
+}
+

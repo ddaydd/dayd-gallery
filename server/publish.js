@@ -9,3 +9,7 @@ Meteor.publish("daydGallery", function() {
 Meteor.publish("daydGalleryUser", function(username) {
   return DaydGallery.find({'user.username': username});
 });
+
+Meteor.publish(null, function() {
+  return DaydGalleryMedias.find({});
+});
