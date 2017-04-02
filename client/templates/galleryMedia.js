@@ -8,16 +8,16 @@ Template.daydGalleryMedia.helpers({
     return DaydGalleryMedias.findOne(this.media_id);
   },
 
-  // link: function() {
-  //   return this.link();
-  // },
+  folders: function() {
+    return DaydGallery.find({type: 'folder', "createdBy._id": this.createdBy._id});
+  },
 
   nbCommentaires: function() {
-    var that = this;
+    const that = this;
     Meteor.call('nbCommentaires', 'media', this._id, function(err, res) {
       Session.set('nbc' + 'media' + that._id, res);
     });
-    var nb = Session.get('nbc' + 'media' + this._id)
+    const nb = Session.get('nbc' + 'media' + this._id);
     return nb ? nb : '.';
   },
 
@@ -43,7 +43,9 @@ Template.daydGalleryMedia.events({
   'change [name=moveMedia]': function(e, tpl) {
     e.preventDefault();
 
-    var folder_id = $(e.currentTarget).val();
+    console.log(this);
+    const folder_id = $(e.currentTarget).val();
+    console.log(folder_id);
     if(folder_id === "select") return;
     Meteor.call('moveGalerieMedias', this, folder_id, function(err, res) {
     });

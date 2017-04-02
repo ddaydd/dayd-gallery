@@ -15,10 +15,10 @@
 
     {{#with media}}
       {{#if isImage}}
-        <img src="{{link}}" alt="{{name}}s" width="100"/>
+        <img src="{{link 'preview'}}" alt="{{name}}" data-original="{{link}}" width="100"/>
       {{/if}}
       {{#if isVideo}}
-        <video height="auto" controls="controls">
+        <video  width="100" height="auto" controls="controls">
           <source src="{{link}}?play=true" type="{{type}}"/>
           <!-- Same as: -->
           <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->

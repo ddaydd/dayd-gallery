@@ -10,6 +10,11 @@ Package.describe({
   documentation: 'README.md',
 });
 
+Npm.depends({
+  'fs-extra': '2.1.2',
+  'gm': '1.23.0'
+});
+
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
 
@@ -32,11 +37,17 @@ Package.onUse(function(api) {
     'client/templates/galleryFolder.js',
     'client/templates/galleryMedia.html',
     'client/templates/galleryMedia.js',
+    'client/templates/galleryEdit.html',
+    'client/templates/galleryEdit.js',
     'client/templates/galleryUser.html',
     'client/templates/galleryUser.js'
   ], ['client']);
   api.add_files(['lib/collections.js'], ['server', 'client']);
-  api.add_files(['server/publish.js', 'server/methods.js'], ['server']);
+  api.add_files([
+    'server/publish.js',
+    'server/methods.js',
+    'server/image-processing.js'
+  ], ['server']);
 
   api.export(['DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast']);
 });

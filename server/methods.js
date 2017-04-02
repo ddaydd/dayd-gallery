@@ -7,17 +7,16 @@ Meteor.methods({
   galerieCreate: function(obj) {
 // temporaire
 
-    if(obj.date)
-      obj.created = new Date(obj.date * 1000);
+    if(obj.date) obj.created = new Date(obj.date * 1000);
 
     var u = Meteor.users.findOne({"profile.bio.id": obj.id_pseudo});
     var user;
     if(u) {
-      user = {_id: u._id, username: u.username}
+      user = {_id: u._id, username: u.username};
 
       DaydGallery.insert({
         user: user,
-        foldername: obj.dossier,
+        folder_id: obj.dossier,
         backup: obj
       });
 
@@ -92,15 +91,14 @@ Meteor.methods({
   moveGalerieMedias: function(media, folder_id) {
     if(!Meteor.userId()) return false;
 
-    if(media.user._id === Meteor.userId() || Dayd.isAdmin())
+    if(media.createdBy._id === Meteor.userId() || Dayd.isAdmin())
       DaydGallery.update(media._id, {$set: {folder_id: folder_id}});
   },
 
   deleteGalerieMedias: function(media) {
-    if(!Meteor.userId())
-      return false;
+    if(!Meteor.userId()) return false;
 
-    if(media.user._id === Meteor.userId() || Dayd.isAdmin())
+    if(media.createdBy._id === Meteor.userId() || Dayd.isAdmin())
       DaydGallery.remove(media._id);
   },
 
@@ -123,7 +121,7 @@ const findAMedia = function() {
   const idRnd = Math.floor((Math.random() * gs.length));
   const d = DaydGalleryMedias.findOne(gs[idRnd].media_id).get();
   if(d) {
-    d.user = gs[idRnd].user;
+    d.createdBy = gs[idRnd].createdBy;
     d.folder_id = gs[idRnd].folder_id;
     return d;
   }

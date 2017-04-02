@@ -15,19 +15,26 @@
       </ol>
     </div>
 
-    <div class="row">
-      {{#each usersGalerie}}
-        <a href="{{pathFor 'daydGalleryUser' userId=_id}}" class="dayd-bloc dayd-bloc-folder">
-          <div class="username">{{username}}</div>
-          {{#with media}}
-            <img src="{{this.url store='daydGalleryMediasTn' uploading='/img/uploading.gif' storing='/img/uploading.gif'}}" width="100px">
-          {{/with}}
-        </a>
-      {{else}}
-        Aucune galerie
-      {{/each}}
-    </div>
+    {{#each usersGalerie}}
+      <a href="{{pathFor 'daydGalleryUser' userId=_id}}" class="dayd-bloc dayd-bloc-folder">
+        <div class="username">{{username}}</div>
+        {{#with media}}
+          {{#if isImage}}
+            <img src="{{link 'preview'}}" alt="{{name}}" width="100"/>
+          {{/if}}
+          {{#if isVideo}}
+            <video height="auto" controls="controls">
+              <source src="{{link}}?play=true" type="{{type}}"/>
+              <!-- Same as: -->
+              <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->
+            </video>
+          {{/if}}
+        {{/with}}
+      </a>
+    {{else}}
+      Aucune galerie
+    {{/each}}
+    <div class="clearfix"></div>
 
-    {{> commentaires 'medias'}}
   </div>
 </template>

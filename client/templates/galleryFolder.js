@@ -8,10 +8,17 @@ Template.daydGalleryFolder.onCreated(function() {
 
 Template.daydGalleryFolder.helpers({
 
-  'mediaFolder': function() {
-    var g = DaydGallery.findOne({folder_id: this._id});
+  // link: function(){
+  //   console.log(this);
+  //   console.log(this.link);
+  //   console.log(this.link('preview'));
+  //   return this.link('preview');
+  // },
+
+  mediaFolder: function() {
+    const g = DaydGallery.findOne({folder_id: this._id});
     if(g) {
-      var folderIds = Session.get('folderIds');
+      let folderIds = Session.get('folderIds');
       if(folderIds.indexOf(g.media_id) === -1) {
         folderIds.push(g.media_id);
         Session.set('folderIds', folderIds);

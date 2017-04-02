@@ -30,6 +30,10 @@
       </ol>
     </div>
 
+    {{#if isGalerieEditing}}
+      {{> daydGalleryEdit}}
+    {{/if}}
+
     {{#if withFolders}}
       {{#each folders}}
         {{> daydGalleryFolder}}
@@ -48,33 +52,6 @@
       <div class="clearfix"></div>
     </div>
 
-    {{#if isGalerieEditing}}
-      <div class="row">
-        <div class="col-xs-6">
-          {{#if withFolders}}
-            <h2 class="titre">Creer un dossier</h2>
-
-            <form id="createFolder">
-              <div class="form-group">
-                <input name="name" class="form-control" placeholder="folder name">
-                <input name="type" type="hidden" value="folder">
-              </div>
-              <button class="btn btn-xs btn-primary">Creer un dossier</button>
-            </form>
-          {{/if}}
-        </div>
-
-        <div class="col-xs-6">
-          <h2 class="titre">Ajouter des images</h2>
-
-          {{#with currentUpload}}
-            Uploading <b>{{file.name}}</b>:
-            <span id="progress">{{progress.get}}%</span>
-          {{else}}
-            <input id="fileInput" type="file" class="btn btn-primary"/>
-          {{/with}}
-        </div>
-      </div>
-    {{/if}}
+    {{> commentaires type="gallery" value=pageGalleryUserId}}
   </div>
 </template>
