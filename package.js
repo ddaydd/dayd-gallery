@@ -22,7 +22,7 @@ Package.onUse(function(api) {
     'mongo',
     'less@2.7.9',
     'accounts-base',
-    'ecmascript',
+    'ecmascript@0.6.3',
     'ostrio:files@1.7.3'
   ]);
 

@@ -116,7 +116,10 @@ Meteor.methods({
 });
 
 const findAMedia = function() {
-  const gs = DaydGallery.find({media_id: {'$exists': true}}).fetch();
+  const ga = Meteor.users.find({"settings.galerie": true}, {fields: {_id: 1}}).map(function(u) {
+    return u._id;
+  });
+  const gs = DaydGallery.find({media_id: {'$exists': true}, "createdBy._id": {$in: ga}}).fetch();
   if(!gs.length) return false;
   const idRnd = Math.floor((Math.random() * gs.length));
   const d = DaydGalleryMedias.findOne(gs[idRnd].media_id).get();
