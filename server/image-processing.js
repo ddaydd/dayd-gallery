@@ -6,7 +6,7 @@ const fs = Npm.require('fs-extra');
 const gm = Npm.require('gm');
 
 createThumbnails = (collection, fileRef, cb) => {
-  check(fileRef, Object);
+  // check(fileRef, Object);
 
   let isLast = false;
   const finish = (error) => {

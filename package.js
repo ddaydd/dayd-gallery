@@ -12,16 +12,21 @@ Package.describe({
 
 Npm.depends({
   'fs-extra': '2.1.2',
-  'gm': '1.23.0'
+  'gm': '1.23.0',
+  'bootstrap': '3.3.7',
+  'jquery': '3.2.1',
+  'viewerjs': '0.6.2'
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.3');
+  api.versionsFrom('1.4.3.2');
 
   api.use([
+    'dayd:core',
     'mongo',
     'less@2.7.9',
     'accounts-base',
+    'iron:router',
     'ecmascript@0.6.3',
     'ostrio:files@1.7.3'
   ]);
@@ -42,12 +47,17 @@ Package.onUse(function(api) {
     'client/templates/galleryUser.html',
     'client/templates/galleryUser.js'
   ], ['client']);
-  api.add_files(['lib/collections.js'], ['server', 'client']);
+
+  api.add_files([
+    'lib/collections.js',
+    'lib/router.js'
+  ], ['server', 'client']);
+
   api.add_files([
     'server/publish.js',
     'server/methods.js',
     'server/image-processing.js'
   ], ['server']);
 
-  api.export(['DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast']);
+  api.export(['Dayd', 'DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast']);
 });

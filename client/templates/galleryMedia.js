@@ -2,6 +2,8 @@
  * Created by Dayd on 05/04/2016.
  */
 
+Template.daydGalleryMedia.onRendered(function() {
+});
 Template.daydGalleryMedia.helpers({
 
   media: function() {

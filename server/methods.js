@@ -23,7 +23,7 @@ Meteor.methods({
       console.log(u.username)
       Meteor.users.update(u._id, {
         $set: {
-          'settings.galerie': true
+          'profile.galerie': true
         }
       });
 
@@ -107,7 +107,7 @@ Meteor.methods({
   },
 
   activateStatusMyGalerie: function(status) {
-    Meteor.users.update(this.userId, {$set: {"settings.galerie": status}})
+    Meteor.users.update(this.userId, {$set: {"profile.galerie": status}})
   },
 
   lastMedia: function() {
@@ -116,7 +116,7 @@ Meteor.methods({
 });
 
 const findAMedia = function() {
-  const ga = Meteor.users.find({"settings.galerie": true}, {fields: {_id: 1}}).map(function(u) {
+  const ga = Meteor.users.find({"profile.galerie": true}, {fields: {_id: 1}}).map(function(u) {
     return u._id;
   });
   const gs = DaydGallery.find({media_id: {'$exists': true}, "createdBy._id": {$in: ga}}).fetch();

@@ -1,13 +1,12 @@
 Template.daydGallery.onCreated(function() {
   this.subscribe('daydGallery');
   Session.set('folderIds', []);
-
 });
 
 Template.daydGallery.helpers({
 
   usersGalerie: function() {
-    return Meteor.users.find({"settings.galerie": true});
+    return Meteor.users.find({"profile.galerie": true});
   },
 
   media: function() {
@@ -15,11 +14,10 @@ Template.daydGallery.helpers({
     if(g) return DaydGalleryMedias.findOne(g.media_id);
   },
 
-  hasNotGalerie: function() {
-    if(!Meteor.userId())
-      return false;
-
-    return !Meteor.user().settings || !Meteor.user().settings.galerie;
+  hasGalerie: function() {
+    const u = Meteor.user();
+    if(!u) return false;
+    return u.profile && u.profile.galerie;
   },
 
   // media: function() {

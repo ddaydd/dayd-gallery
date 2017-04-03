@@ -5,13 +5,15 @@ Template.daydGalleryUser.onCreated(function() {
 });
 
 Template.daydGalleryUser.onRendered(function() {
-
-  $('#images').viewer({url: 'data-original'});
+  setTimeout(function() {
+    Dayd.viewer = new Viewer(document.getElementById('images'),{url: 'data-original'});
+  }, 200);
   this.autorun(function() {
     let change = Router.current().originalUrl;
-    $('#images').viewer('destroy');
+    if(Dayd.viewer)
+    Dayd.viewer.destroy();
     setTimeout(function() {
-      $('#images').viewer({url: 'data-original'});
+      Dayd.viewer = new Viewer(document.getElementById('images'),{url: 'data-original'});
     }, 200);
   })
 });
@@ -24,9 +26,10 @@ Template.daydGalleryUser.helpers({
     return 'daydGallery_' + u + '_' + f;
   },
 
-  hasNotGalerie: function() {
-    if(!Meteor.userId()) return false;
-    return !Meteor.user().settings || !Meteor.user().settings.galerie;
+  hasGalerie: function() {
+    const u = Meteor.user();
+    if(!u) return false;
+    return u.profile && u.profile.galerie;
   },
 
   medias: function() {

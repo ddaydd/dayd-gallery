@@ -6,10 +6,10 @@
       {{#if isMyGallery}}
         {{#if isGalerieEditing}}
           <div class="pull-right">
-            {{#if hasNotGalerie}}
-              <button class="btn btn-xs btn-primary enableGalerie">Activer ma galerie</button>
-            {{else}}
+            {{#if hasGalerie}}
               <button class="btn btn-xs btn-danger disableGalerie"><i class="fa fa-edit"></i> Desactiver ma galerie</button>
+            {{else}}
+              <button class="btn btn-xs btn-primary enableGalerie">Activer ma galerie</button>
             {{/if}}
             <button class="btn btn-xs btn-default galerie-edit"><i class="fa fa-edit"></i> Terminé</button>
           </div>
@@ -52,6 +52,6 @@
       <div class="clearfix"></div>
     </div>
 
-    {{> commentaires type="gallery" value=pageGalleryUserId}}
+    <!--{{> commentaires type="gallery" value=pageGalleryUserId}}-->
   </div>
 </template>

@@ -1,10 +1,10 @@
 <template name="daydGallery">
   <div id="dayd-gallery">
-    {{#if hasNotGalerie}}
+    {{#unless hasGalerie}}
       <div class="pull-right">
         <button class="btn btn-xs btn-primary enableGalerie">Activer ma galerie</button>
       </div>
-    {{/if}}
+    {{/unless}}
 
     <div class="page-header">
       <h1 class="titre">Galeries</h1>

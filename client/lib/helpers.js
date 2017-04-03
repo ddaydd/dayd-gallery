@@ -1,6 +1,10 @@
-// if(typeof(Dayd) === 'undefined') Dayd = {};
-//
-// console.log(Dayd);
+if(typeof(Dayd) === 'undefined') Dayd = {};
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'viewerjs/dist/viewer.css';
+
+Viewer = require('viewerjs');
+
 Template.registerHelper("isGalerieEditing", function() {
   return Session.get('galerie-edit');
 });
