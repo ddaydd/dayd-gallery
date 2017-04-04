@@ -59,5 +59,6 @@ Package.onUse(function(api) {
     'server/image-processing.js'
   ], ['server']);
 
-  api.export(['Dayd', 'DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast']);
+  api.export(['DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast'], ['client', 'server']);
+  // api.export(['Dayd'], ['client']);
 });

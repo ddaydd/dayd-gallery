@@ -20,7 +20,7 @@
 
       <ol class="breadcrumb">
         <li><a href="/" title="Accueil"><i class="fa fa-home"></i></a></li>
-        <li><a href="/galeries" title="Galeries">Galeries</a></li>
+        <li><a href="{{pathFor 'daydGallery'}}" title="Galeries">Galeries</a></li>
         {{#if withFolders}}
           <li class="active">{{idToUsername userId}}</li>
         {{else}}

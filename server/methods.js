@@ -91,14 +91,14 @@ Meteor.methods({
   moveGalerieMedias: function(media, folder_id) {
     if(!Meteor.userId()) return false;
 
-    if(media.createdBy._id === Meteor.userId() || Dayd.isAdmin())
+    if(media.createdBy._id === Meteor.userId() || Dayd.core.isAdmin())
       DaydGallery.update(media._id, {$set: {folder_id: folder_id}});
   },
 
   deleteGalerieMedias: function(media) {
     if(!Meteor.userId()) return false;
 
-    if(media.createdBy._id === Meteor.userId() || Dayd.isAdmin())
+    if(media.createdBy._id === Meteor.userId() || Dayd.core.isAdmin())
       DaydGallery.remove(media._id);
   },
 

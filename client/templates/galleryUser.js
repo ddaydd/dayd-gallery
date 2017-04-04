@@ -1,3 +1,5 @@
+if(typeof(Dayd) === 'undefined') Dayd = {};
+
 Template.daydGalleryUser.onCreated(function() {
   Session.set('galerie-edit', '');
 
@@ -53,7 +55,7 @@ Template.daydGalleryUser.helpers({
 
   isMyGallery: function() {
     if(!Meteor.user()) return false;
-    if(Dayd.isAdmin()) return true;
+    if(Dayd.core.isAdmin()) return true;
     return this.userId === Meteor.userId();
   }
 
