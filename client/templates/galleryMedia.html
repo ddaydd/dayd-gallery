@@ -1,15 +1,19 @@
 <template name="daydGalleryMedia">
   <li class="dayd-bloc dayd-bloc-media">
     {{#if isGalerieEditing}}
-      <div class="action-media">
-        <button class="pull-right btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
-        <select name="moveMedia">
-          <option value="select">-- Move</option>
-          <option value="">No folder</option>
-          {{#each folders}}
-            <option value="{{_id}}">{{name}}</option>
-          {{/each}}
-        </select>
+      <div class="row action-media">
+        <div class="col-xs-6">
+          <select name="moveMedia" class="form-control">
+            <option value="select">-- Move</option>
+            <option value="">No folder</option>
+            {{#each folders}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-xs-6">
+          <button class="btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+        </div>
       </div>
     {{/if}}
 
@@ -18,7 +22,7 @@
         <img src="{{link 'preview'}}" alt="{{name}}" data-original="{{link}}" width="100"/>
       {{/if}}
       {{#if isVideo}}
-        <video  width="100" height="auto" controls="controls">
+        <video width="100" height="auto" controls="controls">
           <source src="{{link}}?play=true" type="{{type}}"/>
           <!-- Same as: -->
           <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->

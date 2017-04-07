@@ -7,16 +7,13 @@ Template.daydGalleryUser.onCreated(function() {
 });
 
 Template.daydGalleryUser.onRendered(function() {
-  setTimeout(function() {
-    Dayd.viewer = new Viewer(document.getElementById('images'),{url: 'data-original'});
-  }, 200);
-  this.autorun(function() {
-    let change = Router.current().originalUrl;
-    if(Dayd.viewer)
-    Dayd.viewer.destroy();
-    setTimeout(function() {
-      Dayd.viewer = new Viewer(document.getElementById('images'),{url: 'data-original'});
-    }, 200);
+  let instance = this;
+  instance.autorun(function() {
+    Router.current().originalUrl; // pour la réactivité
+    if(Template.instance().subscriptionsReady())
+      Tracker.afterFlush(function() { // #each dom ready
+        Dayd.viewer = new Viewer(document.getElementById('images'), {url: 'data-original'});
+      });
   })
 });
 
@@ -55,7 +52,7 @@ Template.daydGalleryUser.helpers({
 
   isMyGallery: function() {
     if(!Meteor.user()) return false;
-    if(Dayd.core.isAdmin()) return true;
+    // if(Dayd.core.isAdmin()) return true;
     return this.userId === Meteor.userId();
   }
 

@@ -4,18 +4,22 @@
       {{#if withFolders}}
         <h2 class="titre">Creer un dossier</h2>
 
-        <form id="createFolder">
-          <div class="form-group">
-            <input name="name" class="form-control" placeholder="folder name">
-            <input name="type" type="hidden" value="folder">
+        <form id="createFolder" class="form-horizontal">
+          <div class="col-xs-6">
+            <div class="form-group">
+              <input name="name" class="form-control" placeholder="folder name">
+              <input name="type" type="hidden" value="folder">
+            </div>
           </div>
-          <button class="btn btn-xs btn-primary">Creer un dossier</button>
+          <div class="col-xs-6">
+            <button class="btn btn-primary">Creer</button>
+          </div>
         </form>
       {{/if}}
     </div>
 
     <div class="col-xs-6">
-      <h2 class="titre">Ajouter des images</h2>
+      <h2 class="titre">Ajouter une image</h2>
 
       {{#with currentUpload}}
         Uploading <b>{{file.name}}</b>:

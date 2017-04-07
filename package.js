@@ -22,7 +22,8 @@ Package.onUse(function(api) {
   api.versionsFrom('1.4.3.2');
 
   api.use([
-    'dayd:core',
+    'orbiter:core',
+    'dayd:comments',
     'mongo',
     'less@2.7.9',
     'accounts-base',
@@ -60,5 +61,4 @@ Package.onUse(function(api) {
   ], ['server']);
 
   api.export(['DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast'], ['client', 'server']);
-  // api.export(['Dayd'], ['client']);
 });

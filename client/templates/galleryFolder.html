@@ -1,7 +1,11 @@
 <template name="daydGalleryFolder">
   <a href="{{pathFor 'daydGalleryUser' userId=createdBy._id folderId=_id}}" class="dayd-bloc dayd-bloc-folder">
     {{#if isGalerieEditing}}
-      <button class="pull-right btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+      <div class="action-media">
+        <div class="col-xs-offset-6">
+          <button class="btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
+        </div>
+      </div>
     {{/if}}
     <div class="username">{{name}}</div>
     {{#with mediaFolder}}
@@ -9,7 +13,7 @@
         <img src="{{link 'preview'}}" alt="{{name}}s" width="100"/>
       {{/if}}
       {{#if isVideo}}
-        <video  width="100" height="auto">
+        <video width="100" height="auto">
           <source src="{{link}}?play=true" type="{{type}}"/>
           <!-- Same as: -->
           <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->
