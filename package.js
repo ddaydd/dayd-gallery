@@ -22,6 +22,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.4.3.2');
 
   api.use([
+    'dayd:core',
     'orbiter:core',
     'dayd:comments',
     'mongo',

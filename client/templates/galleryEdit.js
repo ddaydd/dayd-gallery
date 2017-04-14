@@ -48,7 +48,7 @@ Template.daydGalleryEdit.events({
 
       const user = {
         _id: this.userId,
-        username: Dayd.accounts.getUsername(this.userId)
+        username: Dayd.core.getUsername(this.userId)
       };
 
       const that = this;
