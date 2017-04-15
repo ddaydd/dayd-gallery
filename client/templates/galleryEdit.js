@@ -30,7 +30,7 @@ Template.daydGalleryEdit.events({
     form.createdAt = new Date();
 
     Meteor.call('createGalerieFolder', form, function(err) {
-      if(err) console.log(err);
+      if(err) console.error(err);
     });
   },
 
@@ -66,7 +66,7 @@ Template.daydGalleryEdit.events({
             createdAt: new Date()
           };
           Meteor.call('createGalerieMedias', media, function(err) {
-            if(err) console.log(err);
+            if(err) console.error(err);
             // else $('form#upload')[0].reset();
           });
         }
