@@ -29,8 +29,7 @@ Package.onUse(function(api) {
     'less@2.7.9',
     'accounts-base',
     'iron:router',
-    'ecmascript@0.6.3',
-    'ostrio:files@1.7.3'
+    'ecmascript@0.6.3'
   ]);
 
   api.use("templating", "client");
@@ -57,8 +56,7 @@ Package.onUse(function(api) {
 
   api.add_files([
     'server/publish.js',
-    'server/methods.js',
-    'server/image-processing.js'
+    'server/methods.js'
   ], ['server']);
 
   api.export(['DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast'], ['client', 'server']);
