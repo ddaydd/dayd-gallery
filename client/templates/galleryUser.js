@@ -10,10 +10,13 @@ Template.daydGalleryUser.onRendered(function() {
   let instance = this;
   instance.autorun(function() {
     Router.current().originalUrl; // pour la réactivité
-    if(Template.instance().subscriptionsReady())
+    if(Template.instance().subscriptionsReady()) {
+      console.log('1');
       Tracker.afterFlush(function() { // #each dom ready
-        Dayd.viewer = new Viewer(document.getElementById('images'), {url: 'data-original'});
+        console.log('2');
+        Dayd.viewer = new Dayd.core.Viewer(instance.$('.medias-viewer')[0], {url: 'data-original'});
       });
+    }
   })
 });
 

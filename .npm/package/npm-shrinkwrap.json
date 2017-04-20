@@ -10,11 +10,6 @@
       "resolved": "https://registry.npmjs.org/array-series/-/array-series-0.1.5.tgz",
       "from": "array-series@>=0.1.5 <0.2.0"
     },
-    "bootstrap": {
-      "version": "3.3.7",
-      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz",
-      "from": "bootstrap@3.3.7"
-    },
     "cross-spawn": {
       "version": "4.0.2",
       "resolved": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-4.0.2.tgz",
@@ -44,11 +39,6 @@
       "version": "2.0.0",
       "resolved": "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz",
       "from": "isexe@>=2.0.0 <3.0.0"
-    },
-    "jquery": {
-      "version": "3.2.1",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.2.1.tgz",
-      "from": "jquery@3.2.1"
     },
     "jsonfile": {
       "version": "2.4.0",

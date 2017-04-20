@@ -12,10 +12,7 @@ Package.describe({
 
 Npm.depends({
   'fs-extra': '2.1.2',
-  'gm': '1.23.0',
-  'bootstrap': '3.3.7',
-  'jquery': '3.2.1',
-  'viewerjs': '0.6.2'
+  'gm': '1.23.0'
 });
 
 Package.onUse(function(api) {

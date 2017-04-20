@@ -1,7 +1,6 @@
 if(typeof(Dayd) === 'undefined') Dayd = {};
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'viewerjs/dist/viewer.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 
 Viewer = require('viewerjs');
 
