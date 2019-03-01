@@ -1,24 +1,26 @@
 <template name="daydGalleryEdit">
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-sm-6">
       {{#if withFolders}}
         <h2 class="titre">Creer un dossier</h2>
 
         <form id="createFolder" class="form-horizontal">
-          <div class="col-xs-6">
-            <div class="form-group">
-              <input name="name" class="form-control" placeholder="folder name">
-              <input name="type" type="hidden" value="folder">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input name="name" class="form-control" placeholder="folder name">
+                <input name="type" type="hidden" value="folder">
+              </div>
             </div>
-          </div>
-          <div class="col-xs-6">
-            <button class="btn btn-primary">Creer</button>
+            <div class="col-sm-6">
+              <button class="btn btn-primary">Creer</button>
+            </div>
           </div>
         </form>
       {{/if}}
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-sm-6">
       <h2 class="titre">Ajouter une image</h2>
 
       {{#with currentUpload}}

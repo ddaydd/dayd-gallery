@@ -2,9 +2,7 @@
  * Created by Dayd on 05/04/2016.
  */
 
-Template.daydGalleryMedia.onRendered(function() {
-});
-Template.daydGalleryMedia.helpers({
+Template.daydGalleryMediaPreview.helpers({
 
   media: function() {
     return DaydGalleryMedias.findOne(this.media_id);
@@ -29,7 +27,7 @@ Template.daydGalleryMedia.helpers({
 
 });
 
-Template.daydGalleryMedia.events({
+Template.daydGalleryMediaPreview.events({
 
   'click .comment-all': function(e, tpl) {
     return false;
@@ -45,7 +43,6 @@ Template.daydGalleryMedia.events({
   'change [name=moveMedia]': function(e, tpl) {
     e.preventDefault();
 
-    console.log(this);
     const folder_id = $(e.currentTarget).val();
     console.log(folder_id);
     if(folder_id === "select") return;
@@ -58,4 +55,11 @@ Template.daydGalleryMedia.events({
     Meteor.call('deleteGalerieMedias', this, function(err, res) {
     });
   },
+});
+
+Template.daydGalleryMedia.helpers({
+
+  media: function() {
+    return DaydGalleryMedias.findOne(this.media_id);
+  }
 });

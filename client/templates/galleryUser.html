@@ -11,7 +11,7 @@
             {{else}}
               <button class="btn btn-xs btn-primary enableGalerie">Activer ma galerie</button>
             {{/if}}
-            <button class="btn btn-xs btn-default galerie-edit"><i class="fa fa-edit"></i> Terminé</button>
+            <button class="btn btn-xs btn-light galerie-edit"><i class="fa fa-edit"></i> Terminé</button>
           </div>
         {{else}}
           <button class="pull-right btn btn-xs btn-primary galerie-edit"><i class="fa fa-edit"></i> Modifier</button>
@@ -19,13 +19,13 @@
       {{/if}}
 
       <ol class="breadcrumb">
-        <li><a href="/" title="Accueil"><i class="fa fa-home"></i></a></li>
-        <li><a href="{{pathFor 'daydGallery'}}" title="Galeries">Galeries</a></li>
+        <li class="breadcrumb-item"><a href="/" title="Accueil"><i class="fa fa-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{{pathFor 'daydGallery'}}" title="Galeries">Galeries</a></li>
         {{#if withFolders}}
-          <li class="active">{{getUsername userId}}</li>
+          <li class="breadcrumb-item active">{{getUsername userId}}</li>
         {{else}}
-          <li><a href="{{pathFor 'daydGalleryUser' userId=userId folderId=''}}" title="{{getUsername userId}}">{{getUsername userId}}</a></li>
-          <li class="active">{{folderName}}</li>
+          <li class="breadcrumb-item"><a href="{{pathFor 'daydGalleryUser' userId=userId folderId=''}}" title="{{getUsername userId}}">{{getUsername userId}}</a></li>
+          <li class="breadcrumb-item active">{{folderName}}</li>
         {{/if}}
       </ol>
     </div>
@@ -42,13 +42,27 @@
     {{/if}}
 
     <div>
-      <ul class="list-unstyled medias-viewer">
-        {{#each medias}}
-          {{> daydGalleryMedia}}
-        {{else}}
-          Aucune image
-        {{/each}}
-      </ul>
+      {{#if isGalerieEditing}}
+        <ul class="list-unstyled">
+          {{#each medias}}
+            {{> daydGalleryMediaPreview}}
+          {{else}}
+            Aucune image
+          {{/each}}
+        </ul>
+      {{else}}
+        <ul class="list-unstyled gridder">
+          {{#each medias}}
+            {{> daydGalleryMediaPreview}}
+          {{else}}
+            Aucune image
+          {{/each}}
+        </ul>
+      {{/if}}
+
+      {{#each medias}}
+        {{> daydGalleryMedia}}
+      {{/each}}
       <div class="clearfix"></div>
     </div>
 

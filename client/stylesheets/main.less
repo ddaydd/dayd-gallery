@@ -2,7 +2,7 @@
   .dayd-bloc {
     padding: 0;
     position: relative;
-    float: left;
+    //float: left;
     min-width: 100px;
 
     &.dayd-bloc-folder, &.dayd-bloc-media {
@@ -12,6 +12,8 @@
 
     &.dayd-bloc-folder {
       min-height: 120px;
+      float: left;
+
       .username {
         padding-left: 5px;
       }
@@ -20,6 +22,7 @@
     &.dayd-bloc-media {
       background: none;
       box-shadow: none;
+
       &:before {
         background: none;
         box-shadow: none;
@@ -36,21 +39,25 @@
       left: 125px;
       width: calc(~"100% - 154px");
     }
+
     &:hover {
       .action-media {
         display: block;
       }
     }
+
     .comment {
       cursor: pointer;
       position: absolute;
       top: 0;
       left: 0;
+
       &:before {
         content: url("/theme/design/cmt.gif");
         position: absolute;
         z-index: 1;
       }
+
       .comment-all {
         background-color: rgba(0, 0, 0, 0.28);
         padding-bottom: 20px;
@@ -71,6 +78,7 @@
     padding: 20px;
     background-color: #fff;
     overflow: scroll;
+
     .dayd-bloc {
       width: 40%;
     }
@@ -79,6 +87,12 @@
   #commentaires {
     .dayd-bloc {
       padding: 9px;
+    }
+  }
+
+  .gridder-expanded-content {
+    img {
+      width: 100%;
     }
   }
 }

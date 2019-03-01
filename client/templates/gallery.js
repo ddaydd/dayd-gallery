@@ -16,7 +16,7 @@ Template.daydGallery.helpers({
 
   hasGalerie: function() {
     const u = Meteor.user();
-    if(!u) return false;
+    if(!u) return true;
     return u.profile && u.profile.galerie;
   },
 

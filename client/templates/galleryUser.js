@@ -1,4 +1,4 @@
-if(typeof(Dayd) === 'undefined') Dayd = {};
+if(typeof (Dayd) === 'undefined') Dayd = {};
 
 Template.daydGalleryUser.onCreated(function() {
   Session.set('galerie-edit', '');
@@ -9,15 +9,44 @@ Template.daydGalleryUser.onCreated(function() {
 Template.daydGalleryUser.onRendered(function() {
   let instance = this;
   instance.autorun(function() {
-    Router.current().originalUrl; // pour la réactivité
+    const cr = Router.current(); // pour la réactivité et l'image affiché
     if(Template.instance().subscriptionsReady()) {
-      console.log('1');
       Tracker.afterFlush(function() { // #each dom ready
-        console.log('2');
-        Dayd.viewer = new Dayd.core.Viewer(instance.$('.medias-viewer')[0], {url: 'data-original'});
+        // Call Gridder
+        $('.gridder-show').remove();
+        const $gridder = $('.gridder');
+        $gridder.gridderExpander({
+          scroll: true,
+          scrollOffset: 30,
+          scrollTo: "listitem", // panel or listitem
+          animationSpeed: 400,
+          animationEasing: "easeInOutExpo",
+          showNav: false, // Show Navigation
+          nextText: "", // Next button text
+          prevText: "", // Previous button text
+          closeText: "", // Close button text
+          onStart: function() {
+            //Gridder Inititialized
+            if(cr.params.query.imgId) {
+              Meteor.setTimeout(function() {
+                $('[data-griddercontent="#gridder_' + cr.params.query.imgId + '"]').trigger("click");
+              }, 100);
+            }
+          },
+          onContent: function() {
+            //Gridder Content Loaded
+          },
+          onClosed: function() {
+            //Gridder Closed
+          }
+        });
       });
     }
   })
+});
+
+Template.daydGalleryUser.onDestroyed(function() {
+
 });
 
 Template.daydGalleryUser.helpers({

@@ -20,7 +20,6 @@ Package.onUse(function(api) {
 
   api.use([
     'dayd:core',
-    'orbiter:core',
     'dayd:comments',
     'mongo',
     'less@2.7.9',
@@ -33,6 +32,9 @@ Package.onUse(function(api) {
 
   api.add_files([
     'client/stylesheets/main.less',
+    'client/stylesheets/gridder.css',
+    'client/stylesheets/gridder_demo.css',
+    'client/lib/jquery.gridder.js',
     'client/lib/helpers.js',
     'client/templates/gallery.html',
     'client/templates/gallery.js',

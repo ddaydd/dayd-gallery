@@ -1,8 +1,8 @@
-<template name="daydGalleryMedia">
-  <li class="dayd-bloc dayd-bloc-media">
-    {{#if isGalerieEditing}}
+<template name="daydGalleryMediaPreview">
+  {{#if isGalerieEditing}}
+    <li class="dayd-bloc dayd-bloc-media">
       <div class="row action-media">
-        <div class="col-xs-6">
+        <div class="col-sm-6">
           <select name="moveMedia" class="form-control">
             <option value="select">-- Move</option>
             <option value="">No folder</option>
@@ -11,23 +11,59 @@
             {{/each}}
           </select>
         </div>
-        <div class="col-xs-6">
+        <div class="col-sm-6">
           <button class="btn btn-xs btn-danger deleteMedia"><i class="fa fa-trash"></i></button>
         </div>
       </div>
-    {{/if}}
 
+      {{#with media}}
+        {{#if isImage}}
+          <img src="{{link 'preview'}}" alt="{{name}}" data-original="{{link}}" width="100"/>
+        {{/if}}
+        {{#if isVideo}}
+          <video width="100" height="auto" controls="controls">
+            <source src="{{link}}?play=true" type="{{type}}"/>
+            <!-- Same as: -->
+            <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->
+          </video>
+        {{/if}}
+      {{/with}}
+    </li>
+  {{else}}
     {{#with media}}
-      {{#if isImage}}
-        <img src="{{link 'preview'}}" alt="{{name}}" data-original="{{link}}" width="100"/>
-      {{/if}}
-      {{#if isVideo}}
-        <video width="100" height="auto" controls="controls">
-          <source src="{{link}}?play=true" type="{{type}}"/>
-          <!-- Same as: -->
-          <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->
-        </video>
-      {{/if}}
+      <li class="dayd-bloc-media gridder-list" data-griddercontent="#gridder_{{_id}}">
+        {{#if isImage}}
+          <img src="{{link 'preview'}}" alt="{{name}}" data-original="{{link}}" width="100"/>
+        {{/if}}
+        {{#if isVideo}}
+          <video width="100" height="auto" controls="controls">
+            <source src="{{link}}?play=true" type="{{type}}"/>
+            <!-- Same as: -->
+            <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->
+          </video>
+        {{/if}}
+      </li>
     {{/with}}
-  </li>
+  {{/if}}
 </template>
+
+<template name="daydGalleryMedia">
+  {{#with media}}
+    <div id="gridder_{{_id}}" class="gridder-content">
+      <div>
+        {{#if isImage}}
+          <img src="{{link}}" alt="{{name}}"/>
+        {{/if}}
+        {{#if isVideo}}
+          <video width="100" height="auto" controls="controls">
+            <source src="{{link}}?play=true" type="{{type}}"/>
+            <!-- Same as: -->
+            <!-- <source src="{{fileURL}}?play=true" type="{{type}}" /> -->
+          </video>
+        {{/if}}
+      </div>
+      <div class="text-center">{{name}}</div>
+    </div>
+  {{/with}}
+</template>
+
