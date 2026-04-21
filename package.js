@@ -15,26 +15,26 @@ Npm.depends({
   'gm': '1.23.0'
 });
 
-Package.onUse(function(api) {
-  api.versionsFrom('1.4.3.2');
-
+Package.onUse(function (api) {
+  //api.versionsFrom('2.7.1');
+  api.use(["modules", "ecmascript"]);
   api.use([
-    'dayd:core',
+    'davidfm:core',
     'dayd:comments',
     'mongo',
-    'less@2.7.9',
-    'accounts-base',
-    'iron:router',
-    'ecmascript@0.6.3'
+    'less',
+    //'accounts-base',
+    //'iron:router',
+    //'ecmascript'
+    'ostrio:files@3.0.0-rc.3',
   ]);
 
   api.use("templating", "client");
 
-  api.add_files([
+  api.addFiles([
     'client/stylesheets/main.less',
     'client/stylesheets/gridder.css',
     'client/stylesheets/gridder_demo.css',
-    'client/lib/jquery.gridder.js',
     'client/lib/helpers.js',
     'client/templates/gallery.html',
     'client/templates/gallery.js',
@@ -48,15 +48,15 @@ Package.onUse(function(api) {
     'client/templates/galleryUser.js'
   ], ['client']);
 
-  api.add_files([
+  api.addFiles([
     'lib/collections.js',
     'lib/router.js'
   ], ['server', 'client']);
 
-  api.add_files([
+  api.addFiles([
     'server/publish.js',
     'server/methods.js'
   ], ['server']);
 
-  api.export(['DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast'], ['client', 'server']);
+  // api.export(['DaydGallery', 'DaydGalleryMedias', 'daydGalleryLast'], ['client', 'server']);
 });

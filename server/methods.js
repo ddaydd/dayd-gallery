@@ -2,17 +2,19 @@
  * Created by dayd on 23 aout 2015
  */
 
+import { DaydGallery, DaydGalleryMedias } from '../lib/collections.js';
+
 Meteor.methods({
 
-  galerieCreate: function(obj) {
-// temporaire
+  galerieCreate: async function (obj) {
+    // temporaire
 
-    if(obj.date) obj.created = new Date(obj.date * 1000);
+    if (obj.date) obj.created = new Date(obj.date * 1000);
 
-    var u = Meteor.users.findOne({"profile.bio.id": obj.id_pseudo});
+    var u = await Meteor.users.findOneAsync({ "profile.bio.id": obj.id_pseudo });
     var user;
-    if(u) {
-      user = {_id: u._id, username: u.username};
+    if (u) {
+      user = { _id: u._id, username: u.username };
 
       DaydGallery.insert({
         user: user,
@@ -21,7 +23,7 @@ Meteor.methods({
       });
 
       console.log(u.username)
-      Meteor.users.update(u._id, {
+      await Meteor.users.updateAsync(u._id, {
         $set: {
           'profile.galerie': true
         }
@@ -31,49 +33,56 @@ Meteor.methods({
     }
   },
 
-  mediabackCreate: function(obj) {
-// temporaire
+  mediabackCreate: async function (obj) {
+    // temporaire
 
 
-    MediaBack.insert(obj);
+    await MediaBack.insertAsync(obj);
 
     console.log('mediabackCreate insert')
 
   },
 
+  debugTemp: async function () {
+    // temporaire
 
-  majj: function() {
-    var galeries = DaydGallery.find().fetch();
-    _.each(galeries, function(galerie) {
-      if(galerie.foldername) {
-        var media = MediaBack.findOne({id: galerie.backup.media_id});
-        if(media)
-          DaydGallery.update(galerie._id, {$set: {name: media.real_name}});
-        if(galerie.foldername && !DaydGallery.findOne({type: 'folder', name: galerie.foldername}))
-          DaydGallery.insert({type: 'folder', name: galerie.foldername, user: galerie.user});
+    const medias = await DaydGallery.find().fetchAsync();
+    medias.forEach(async function (m) {
+      console.log(m);
+      await DaydGalleryMedias.updateAsync({ name: m.name }, { $set: { userId: m.createdBy._id } });
+    });
+  },
+
+  majj: async function () {
+    var galeries = await DaydGallery.find().fetchAsync();
+    _.each(galeries, async function (galerie) {
+      if (galerie.foldername) {
+        var media = await MediaBack.findOneAsync({ id: galerie.backup.media_id });
+        if (media)
+          await DaydGallery.updateAsync(galerie._id, { $set: { name: media.real_name } });
+        if (galerie.foldername && !await DaydGallery.findOneAsync({ type: 'folder', name: galerie.foldername }))
+          DaydGallery.insert({ type: 'folder', name: galerie.foldername, user: galerie.user });
       }
-      else if(galerie.type != 'folder') {
-        if(galerie.backup) {
-          var media = MediaBack.findOne({id: galerie.backup.media_id});
-          if(media) {
-            DaydGallery.update(galerie._id, {$set: {name: media.real_name}});
-          }
-
+      else if (galerie.type != 'folder') {
+        if (galerie.backup) {
+          var media = await MediaBack.findOneAsync({ id: galerie.backup.media_id });
+          if (media)
+            await DaydGallery.updateAsync(galerie._id, { $set: { name: media.real_name } });
         }
       }
     })
   },
 
-  linkk: function() {
+  linkk: function () {
     var galeries = DaydGallery.find().fetch();
-    _.each(galeries, function(galerie) {
-      if(galerie.type != 'folder') {
-        if(galerie.name) {
+    _.each(galeries, function (galerie) {
+      if (galerie.type != 'folder') {
+        if (galerie.name) {
           console.log(galerie.name)
-          var media = DaydGalleryMedias.findOne({"original.name": galerie.name});
-          if(media) {
+          var media = DaydGalleryMedias.findOne({ "original.name": galerie.name });
+          if (media) {
             console.log(media)
-            DaydGallery.update(galerie._id, {$set: {media_id: media._id}});
+            DaydGallery.update(galerie._id, { $set: { media_id: media._id } });
           }
           else
             console.log('not')
@@ -84,49 +93,53 @@ Meteor.methods({
     return true;
   },
 
-  createGalerieMedias: function(media) {
+  createGalerieMedias: function (media) {
     DaydGallery.insert(media);
   },
 
-  moveGalerieMedias: function(media, folder_id) {
-    if(!Meteor.userId()) return false;
+  moveGalerieMedias: async function (media, folder_id) {
+    if (!Meteor.userId()) return false;
 
-    if(media.createdBy._id === Meteor.userId() || Dayd.core.isAdmin())
-      DaydGallery.update(media._id, {$set: {folder_id: folder_id}});
+    if (media.createdBy._id === Meteor.userId() || await dfm.isAdminAsync())
+      await DaydGallery.updateAsync(media._id, { $set: { folder_id: folder_id } });
   },
 
-  deleteGalerieMedias: function(media) {
-    if(!Meteor.userId()) return false;
+  deleteGalerieMedias: async function (media) {
+    if (!Meteor.userId()) return false;
 
-    if(media.createdBy._id === Meteor.userId() || Dayd.core.isAdmin())
-      DaydGallery.remove(media._id);
+    if (media.createdBy._id === Meteor.userId() || await dfm.isAdminAsync())
+      await DaydGallery.removeAsync(media._id);
   },
 
-  createGalerieFolder: function(folder) {
+  createGalerieFolder: function (folder) {
     DaydGallery.insert(folder);
   },
 
-  activateStatusMyGalerie: function(status) {
-    Meteor.users.update(this.userId, {$set: {"profile.galerie": status}})
+  activateStatusMyGalerie: function (status) {
+    Meteor.users.update(this.userId, { $set: { "profile.galerie": status } })
   },
 
-  lastMedia: function() {
-    return findAMedia();
-  }
+  findOneMediaGallery: async function (options) {
+    return await findAMedia(options);
+  },
 });
 
-const findAMedia = function() {
-  const ga = Meteor.users.find({"profile.galerie": true}, {fields: {_id: 1}}).map(function(u) {
-    return u._id;
-  });
-  const gs = DaydGallery.find({media_id: {'$exists': true}, "createdBy._id": {$in: ga}}).fetch();
-  if(!gs.length) return false;
+const findAMedia = async function (options = {}) {
+  let ga;
+  if (options.query && options.query.userId) {
+    ga = [options.query.userId];
+  } else {
+    ga = await Meteor.users.find({ "profile.galerie": true }, { fields: { _id: 1 } })
+      .mapAsync(u => u._id);
+  }
+  const gs = await DaydGallery.find({ media_id: { '$exists': true }, "createdBy._id": { $in: ga } }).fetchAsync();
+  if (!gs.length) return false;
   const idRnd = Math.floor((Math.random() * gs.length));
-  const d = DaydGalleryMedias.findOne(gs[idRnd].media_id).get();
-  if(d) {
+  const d = await DaydGalleryMedias.collection.findOneAsync(gs[idRnd].media_id);
+  if (d) {
     d.createdBy = gs[idRnd].createdBy;
     d.folder_id = gs[idRnd].folder_id;
     return d;
   }
-  else return findAMedia();
+  return false;
 };

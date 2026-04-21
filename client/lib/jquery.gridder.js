@@ -29,7 +29,7 @@
         return h / 2 * Math.pow(2, 10 * (f - 1)) + a;
       }
       return h / 2 * (-Math.pow(2, -10 * --f) + 2) + a;
-    }
+    },
   });
 
   /* KEYPRESS LEFT & RIGHT ARROW */
@@ -46,8 +46,10 @@
         if(nextId) {
           nextId = nextId.replace("#gridder_", "");
           const cr = Router.current();
-          cr.params.query.imgId = nextId;
-          Router.go('daydGalleryUser', cr.params, {query: "imgId=" + nextId});
+          if(cr.route.getName() === 'daydGalleryUser') {
+            cr.params.query.imgId = nextId;
+            Router.go('daydGalleryUser', cr.params, {query: "imgId=" + nextId});
+          }
         }
       }
       if(keyCode === 39) {
@@ -58,11 +60,14 @@
         if(nextId) {
           nextId = nextId.replace("#gridder_", "");
           const cr = Router.current();
-          cr.params.query.imgId = nextId;
-          Router.go('daydGalleryUser', cr.params, {query: "imgId=" + nextId});
+          if(cr.route.getName() === 'daydGalleryUser') {
+            cr.params.query.imgId = nextId;
+            Router.go('daydGalleryUser', cr.params, {query: "imgId=" + nextId});
+          }
         }
       }
-    } else {
+    }
+    else {
       //console.log("No active gridder.");
     }
   });
@@ -82,7 +87,7 @@
 
   };
 
-// Default Options
+  // Default Options
   $.fn.gridderExpander.defaults = {
     scroll: true,
     scrollOffset: 30,
@@ -95,9 +100,8 @@
     closeText: "Close",
     onStart: function() {},
     onContent: function() {},
-    onClosed: function() {}
+    onClosed: function() {},
   };
-
 
   function click_open(e) {
     e.preventDefault();
@@ -105,7 +109,7 @@
     openExpander($(this));
   }
 
-// OPEN EXPANDER
+  // OPEN EXPANDER
   function openExpander($newSelf) {
     // THE SAME IS ALREADY OPEN, LET"S CLOSE IT
     if($newSelf.hasClass("currentGridder"))
@@ -113,7 +117,7 @@
 
     let newImgId = $newSelf.data('griddercontent').replace("#gridder_", "");
     const cr = Router.current();
-    if(cr.params.query.imgId !== newImgId) {
+    if(cr.params.query.imgId !== newImgId && cr.route.getName() === 'daydGalleryUser') {
       cr.params.query.imgId = newImgId;
       return Router.go('daydGalleryUser', cr.params, {query: "imgId=" + newImgId});
     }
@@ -138,7 +142,8 @@
       // Load #ID Content
       theContent = $($newSelf.data("griddercontent")).html();
       processContent($newSelf, theContent);
-    } else {
+    }
+    else {
 
       // Load AJAX Content
       $.ajax({
@@ -151,12 +156,12 @@
         error: function(request) {
           theContent = request.responseText;
           processContent($currentSelf, theContent);
-        }
+        },
       });
     }
   }
 
-// PROCESS CONTENT
+  // PROCESS CONTENT
   function processContent(myself, theContent) {
 
     /* FORMAT OUTPUT */
@@ -191,7 +196,8 @@
           settings.onContent($(myself));
         }
       });
-    } else {
+    }
+    else {
       /* ADD LOADING BLOC */
       const $htmlContent = $("<div class=\"gridder-show loading\"></div>");
       const myBloc = $htmlContent.insertAfter(myself);
@@ -205,15 +211,14 @@
         }
       });
 
-
       /* SCROLL TO CORRECT POSITION AFTER */
       if(settings.scroll) {
         const offset = (settings.scrollTo === "panel" ? myself.offset().top + myself.height() - settings.scrollOffset : myself.offset().top - settings.scrollOffset);
         $("html, body").animate({
-          scrollTop: offset
+          scrollTop: offset,
         }, {
           duration: settings.animationSpeed,
-          easing: settings.animationEasing
+          easing: settings.animationEasing,
         });
       }
 
@@ -222,18 +227,17 @@
     }
   }
 
-
-// CLOSE FUNCTION
+  // CLOSE FUNCTION
   function closeExpander($currentSelf) {
 
     $('.gridder').removeClass('gridder-open');
     // SCROLL TO CORRECT POSITION FIRST
     if(settings.scroll) {
       $("html, body").animate({
-        scrollTop: $currentSelf.offset().top - settings.scrollOffset
+        scrollTop: $currentSelf.offset().top - settings.scrollOffset,
       }, {
         duration: 200,
-        easing: settings.animationEasing
+        easing: settings.animationEasing,
       });
     }
 

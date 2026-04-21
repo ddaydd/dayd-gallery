@@ -1,9 +1,5 @@
 if(typeof(Dayd) === 'undefined') Dayd = {};
 
-// import 'bootstrap/dist/css/bootstrap.css';
-
-Viewer = require('viewerjs');
-
 Template.registerHelper("isGalerieEditing", function() {
   return Session.get('galerie-edit');
 });

@@ -19,13 +19,13 @@
       {{/if}}
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/" title="Accueil"><i class="fa fa-home"></i></a></li>
-        <li class="breadcrumb-item"><a href="{{pathFor 'daydGallery'}}" title="Galeries">Galeries</a></li>
+        <li class=""><a href="/" title="Accueil"><i class="fa fa-home"></i></a></li>
+        <li class=""><a href="{{pathFor 'daydGallery'}}" title="Galeries">Galeries</a></li>
         {{#if withFolders}}
-          <li class="breadcrumb-item active">{{getUsername userId}}</li>
+          <li class=" active">{{getUsername userId}}</li>
         {{else}}
-          <li class="breadcrumb-item"><a href="{{pathFor 'daydGalleryUser' userId=userId folderId=''}}" title="{{getUsername userId}}">{{getUsername userId}}</a></li>
-          <li class="breadcrumb-item active">{{folderName}}</li>
+          <li class=""><a href="{{pathFor 'daydGalleryUser' userId=userId folderId=''}}" title="{{getUsername userId}}">{{getUsername userId}}</a></li>
+          <li class=" active">{{folderName}}</li>
         {{/if}}
       </ol>
     </div>

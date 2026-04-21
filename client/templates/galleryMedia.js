@@ -2,6 +2,8 @@
  * Created by Dayd on 05/04/2016.
  */
 
+import { DaydGallery, DaydGalleryMedias } from '../../lib/collections.js';
+
 Template.daydGalleryMediaPreview.helpers({
 
   media: function() {

@@ -1,4 +1,6 @@
 // daydGalleryUser
+import { DaydGalleryMedias } from '../../lib/collections.js';
+
 Template.daydGalleryEdit.onCreated(function() {
   this.currentUpload = new ReactiveVar(false);
 });
@@ -48,7 +50,7 @@ Template.daydGalleryEdit.events({
 
       const user = {
         _id: this.userId,
-        username: Dayd.core.getUsername(this.userId)
+        username: dfm.getUsername(this.userId)
       };
 
       const that = this;

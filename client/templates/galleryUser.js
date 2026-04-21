@@ -1,9 +1,9 @@
+import { DaydGallery } from '../../lib/collections.js';
+
 if(typeof (Dayd) === 'undefined') Dayd = {};
 
 Template.daydGalleryUser.onCreated(function() {
   Session.set('galerie-edit', '');
-
-  this.subscribe('daydGalleryUser', this.data.username);
 });
 
 Template.daydGalleryUser.onRendered(function() {

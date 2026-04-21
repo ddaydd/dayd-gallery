@@ -10,8 +10,8 @@
       <h1 class="titre">Galeries</h1>
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/" title="Accueil"><i class="fa fa-home"></i></a></li>
-        <li class="breadcrumb-item active">Galeries</li>
+        <li class=""><a href="/" title="Accueil"><i class="fa fa-home"></i></a></li>
+        <li class=" active">Galeries</li>
       </ol>
     </div>
 
@@ -20,7 +20,8 @@
         <div class="username">{{username}}</div>
         {{#with media}}
           {{#if isImage}}
-            <img src="{{link 'preview'}}" alt="{{name}}" width="100"/>
+            <img src="/cdn/storage/dayd_gallery_medias/{{_id}}/preview/" alt="{{name}}" width="100"/>
+            <!--<img src="{{link 'preview'}}" alt="{{name}}" width="100"/>-->
           {{/if}}
           {{#if isVideo}}
             <video height="auto" controls="controls">
