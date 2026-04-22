@@ -51,18 +51,8 @@
           {{/each}}
         </ul>
       {{else}}
-        <ul class="list-unstyled gridder">
-          {{#each medias}}
-            {{> daydGalleryMediaPreview}}
-          {{else}}
-            Aucune image
-          {{/each}}
-        </ul>
+        {{> daydGrid mediasId=mediaIds type="ostrioFiles" path="/cdn/storage/dayd_gallery_medias"}}
       {{/if}}
-
-      {{#each medias}}
-        {{> daydGalleryMedia}}
-      {{/each}}
       <div class="clearfix"></div>
     </div>
 

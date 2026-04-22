@@ -6,51 +6,6 @@ Template.daydGalleryUser.onCreated(function() {
   Session.set('galerie-edit', '');
 });
 
-Template.daydGalleryUser.onRendered(function() {
-  let instance = this;
-  instance.autorun(function() {
-    const cr = Router.current(); // pour la réactivité et l'image affiché
-    if(Template.instance().subscriptionsReady()) {
-      Tracker.afterFlush(function() { // #each dom ready
-        // Call Gridder
-        $('.gridder-show').remove();
-        const $gridder = $('.gridder');
-        // detach previous handlers — autorun may re-invoke init
-        $gridder.off('click');
-        $gridder.gridderExpander({
-          scroll: true,
-          scrollOffset: 30,
-          scrollTo: "listitem", // panel or listitem
-          animationSpeed: 400,
-          animationEasing: "easeInOutExpo",
-          showNav: false, // Show Navigation
-          nextText: "", // Next button text
-          prevText: "", // Previous button text
-          closeText: "", // Close button text
-          onStart: function() {
-            //Gridder Inititialized
-            if(cr.params.query.imgId) {
-              Meteor.setTimeout(function() {
-                $('[data-griddercontent="#gridder_' + cr.params.query.imgId + '"]').trigger("click");
-              }, 100);
-            }
-          },
-          onContent: function() {
-            //Gridder Content Loaded
-          },
-          onClosed: function() {
-            //Gridder Closed
-          }
-        });
-      });
-    }
-  })
-});
-
-Template.daydGalleryUser.onDestroyed(function() {
-
-});
-
 Template.daydGalleryUser.helpers({
 
   pageGalleryUserId: function() {
@@ -69,6 +24,12 @@ Template.daydGalleryUser.helpers({
     let search = {type: {$ne: 'folder'}, "createdBy._id": this.userId, folder_id: {$in: [null, '']}};
     if(this.folderId) search.folder_id = this.folderId;
     return DaydGallery.find(search, {sort: {createdAt: '-1'}});
+  },
+
+  mediaIds: function() {
+    let search = {type: {$ne: 'folder'}, "createdBy._id": this.userId, folder_id: {$in: [null, '']}};
+    if(this.folderId) search.folder_id = this.folderId;
+    return DaydGallery.find(search, {sort: {createdAt: '-1'}}).map(g => g.media_id);
   },
 
   withFolders: function() {
