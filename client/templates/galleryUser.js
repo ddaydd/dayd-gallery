@@ -15,6 +15,8 @@ Template.daydGalleryUser.onRendered(function() {
         // Call Gridder
         $('.gridder-show').remove();
         const $gridder = $('.gridder');
+        // detach previous handlers — autorun may re-invoke init
+        $gridder.off('click');
         $gridder.gridderExpander({
           scroll: true,
           scrollOffset: 30,
