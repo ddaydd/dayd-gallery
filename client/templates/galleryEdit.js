@@ -40,7 +40,6 @@ Template.daydGalleryEdit.events({
     if(e.currentTarget.files && e.currentTarget.files[0]) {
       const upload = DaydGalleryMedias.insert({
         file: e.currentTarget.files[0],
-        streams: 'dynamic',
         chunkSize: 'dynamic'
       }, false);
 

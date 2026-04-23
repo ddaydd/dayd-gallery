@@ -93,8 +93,8 @@ Meteor.methods({
     return true;
   },
 
-  createGalerieMedias: function (media) {
-    DaydGallery.insert(media);
+  createGalerieMedias: async function (media) {
+    await DaydGallery.insertAsync(media);
   },
 
   moveGalerieMedias: async function (media, folder_id) {
