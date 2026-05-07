@@ -20,7 +20,6 @@ Package.onUse(function (api) {
   api.use(["modules", "ecmascript"]);
   api.use([
     'davidfm:core',
-    'dayd:comments',
     'mongo',
     'less',
     //'accounts-base',
