@@ -4,6 +4,17 @@
 
 import { DaydGallery, DaydGalleryMedias } from '../lib/collections.js';
 
+/* Accepte un _id ou l'objet média du template ; renvoie le doc en base si
+ * l'user en est l'auteur ou admin, sinon null. */
+const findGalerieMediaForUser = async (media, userId) => {
+  const id = typeof media === 'string' ? media : media && media._id;
+  if (typeof id !== 'string') return null;
+  const doc = await DaydGallery.findOneAsync({ _id: id });
+  if (!doc) return null;
+  if (doc.createdBy?._id === userId || await dfm.isAdminAsync(userId)) return doc;
+  return null;
+};
+
 Meteor.methods({
 
   galerieCreate: async function (obj) {
@@ -94,21 +105,31 @@ Meteor.methods({
   },
 
   createGalerieMedias: async function (media) {
-    await DaydGallery.insertAsync(media);
+    if (!this.userId || !media || typeof media !== 'object') return false;
+
+    // Auteur imposé côté serveur : le createdBy envoyé par le client est ignoré.
+    await DaydGallery.insertAsync({
+      folder_id: typeof media.folder_id === 'string' ? media.folder_id : undefined,
+      name: String(media.name || ''),
+      media_id: typeof media.media_id === 'string' ? media.media_id : undefined,
+      createdBy: { _id: this.userId, username: (await Meteor.userAsync())?.username },
+      createdAt: new Date(),
+    });
   },
 
   moveGalerieMedias: async function (media, folder_id) {
-    if (!Meteor.userId()) return false;
+    if (!this.userId || typeof folder_id !== 'string') return false;
 
-    if (media.createdBy._id === Meteor.userId() || await dfm.isAdminAsync())
-      await DaydGallery.updateAsync(media._id, { $set: { folder_id: folder_id } });
+    // Propriété vérifiée sur le doc en base, pas sur l'objet envoyé par le client.
+    const doc = await findGalerieMediaForUser(media, this.userId);
+    if (doc) await DaydGallery.updateAsync(doc._id, { $set: { folder_id: folder_id } });
   },
 
   deleteGalerieMedias: async function (media) {
-    if (!Meteor.userId()) return false;
+    if (!this.userId) return false;
 
-    if (media.createdBy._id === Meteor.userId() || await dfm.isAdminAsync())
-      await DaydGallery.removeAsync(media._id);
+    const doc = await findGalerieMediaForUser(media, this.userId);
+    if (doc) await DaydGallery.removeAsync(doc._id);
   },
 
   createGalerieFolder: function (folder) {
