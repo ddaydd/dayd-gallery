@@ -22,7 +22,7 @@ Template.daydGalleryEdit.events({
   'submit #createFolder': function(e, tpl) {
     e.preventDefault();
 
-    let form = tpl.$('form#createFolder').serializeJSON();
+    let form = dfm.serialize(tpl.find('form#createFolder'));
 
     const u = Meteor.user();
     form.createdBy = {
